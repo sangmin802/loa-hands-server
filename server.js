@@ -1,8 +1,8 @@
 const express = require('express');
 const {JSDOM} = require('jsdom');
 const app = express();
-// const port = process.env.PORT;
-const port = 3001
+const port = process.env.PORT;
+// const port = 3001
 
 const axios = require('axios');
 const https = require('https');
