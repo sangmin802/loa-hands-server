@@ -17,12 +17,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended : true}))
 
 app.all('/*', function(req, res, next) {
-  const allowedOrigins = ['*'];
-  const origin = req.headers.origin;
-  if (allowedOrigins.includes(origin)) {
-       res.setHeader('Access-Control-Allow-Origin', origin);
-  }
-  res.header("Access-Control-Allow-Origin", "https://sangmin802.github.io/loa-hands/, ");
+  res.header("Access-Control-Allow-Origin", "*");
   res.header("Access-Control-Allow-Headers", "Content-Type");
   next();
 })
