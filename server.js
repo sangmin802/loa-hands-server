@@ -1,23 +1,24 @@
 const express = require('express');
+const {JSDOM} = require('jsdom');
 const bodyParser = require('body-parser');
+const path = require('path')
 const app = express();
 const port = process.env.PORT;
-const {JSDOM} = require('jsdom');
-const axios = require('axios');
-const https = require('https');
 // const port = 3001
 
-
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({extended : true}))
+const axios = require('axios');
+const https = require('https');
 
 const agent = new https.Agent({  
   rejectUnauthorized: false
 });
 
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({extended : true}))
+
 app.all('/*', function(req, res, next) {
   res.header("Access-Control-Allow-Origin", "*");
-  res.header("Access-Control-Allow-Headers", "X-Requested-With");
+  res.header("Access-Control-Allow-Headers", "X-PINGOTHER, Content-Type");
   next();
 })
 
