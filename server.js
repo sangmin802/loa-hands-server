@@ -1,11 +1,15 @@
 const express = require('express');
-const {JSDOM} = require('jsdom');
+const bodyParser = require('body-parser');
 const app = express();
 const port = process.env.PORT;
-// const port = 3001
-
+const {JSDOM} = require('jsdom');
 const axios = require('axios');
 const https = require('https');
+// const port = 3001
+
+
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({extended : true}))
 
 const agent = new https.Agent({  
   rejectUnauthorized: false
@@ -43,6 +47,7 @@ app.post('/loa-hands/userInfo', async (req, res) => {
   const baseUrl = 'https://m-lostark.game.onstove.com/Profile/';
 
   const name = req.body.name;
+
   const encoded = encodeURIComponent(name);
   const {data : info} = await axios({
     url : `${baseUrl}Character/${encoded}`,
