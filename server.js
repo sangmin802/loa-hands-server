@@ -57,6 +57,9 @@ app.post("/loa-hands/userInfo", async (req, res) => {
     httpsAgent: agent,
   });
 
+  if (info.includes("서비스 점검")) {
+    res.status(403).send({ message: "서비스 점검중입니다." });
+  }
   if (info.includes("alert('캐릭터 정보가 없습니다.")) {
     res.status(403).send({ message: "캐릭터 정보가 없습니다." });
   }
