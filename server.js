@@ -12,6 +12,8 @@ const agent = new https.Agent({
   rejectUnauthorized: false,
 });
 
+const baseUrl = "https://m-lostark.game.onstove.com/Profile/";
+
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
@@ -46,8 +48,6 @@ app.get("/loa-hands/calendar", (req, res) => {
 });
 
 app.post("/loa-hands/userInfo", async (req, res) => {
-  const baseUrl = "https://m-lostark.game.onstove.com/Profile/";
-
   const name = req.body.name;
 
   const encoded = encodeURIComponent(name);
@@ -64,11 +64,11 @@ app.post("/loa-hands/userInfo", async (req, res) => {
     res.status(403).send({ message: "캐릭터 정보가 없습니다." });
   }
 
-  const doc = new JSDOM(info);
+  res.send(info);
+});
 
-  const script = doc.window.document.body.getElementsByTagName("script");
-  const [, memberNo, , pcId, , worldNo] =
-    script[10]?.textContent?.split("'") ?? null;
+app.post("/loa-hands/userCollection", async (req, res) => {
+  const [memberNo, pcId, worldNo] = req.body.member;
 
   const { data: col } = await axios({
     url: `${baseUrl}GetCollection?${new URLSearchParams({
@@ -80,7 +80,7 @@ app.post("/loa-hands/userInfo", async (req, res) => {
     httpsAgent: agent,
   });
 
-  res.send({ info, col });
+  res.send(col);
 });
 
 app.listen(port, () => {
