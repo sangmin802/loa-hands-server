@@ -21,7 +21,7 @@ app.all("/*", function (req, res, next) {
   next();
 });
 
-app.get("/loa-hands/homeData", async (req, res) => {
+app.get("/loa-hands/event", async (req, res) => {
   const { data } = await axios({
     url: "https://m-lostark.game.onstove.com/News/Event/Now",
     method: "GET",
@@ -35,7 +35,7 @@ app.get("/loa-hands/homeData", async (req, res) => {
   res.send(data);
 });
 
-app.get("/loa-hands/timer", (req, res) => {
+app.get("/loa-hands/calendar", (req, res) => {
   axios({
     url: "http://m.inven.co.kr/lostark/timer/",
     method: "GET",
