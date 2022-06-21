@@ -33,8 +33,9 @@ app.get("/loa-hands/event", async (req, res) => {
   if (data.includes("서비스 점검")) {
     res.status(403).send({ message: "서비스 점검중입니다." });
   }
+  res.status(504).send({ message: "timeout" });
 
-  res.send(data);
+  // res.send(data);
 });
 
 app.get("/loa-hands/calendar", (req, res) => {
@@ -57,12 +58,12 @@ app.post("/loa-hands/userInfo", async (req, res) => {
   });
 
   if (info.includes("서비스 점검")) {
-    res.status(403).send({ message: "서비스 점검중입니다." });
+    return res.status(403).send({ message: "서비스 점검중입니다." });
   }
   if (info.includes("alert('캐릭터 정보가 없습니다.")) {
-    res.status(403).send({ message: "캐릭터 정보가 없습니다." });
+    return res.status(403).send({ message: "캐릭터 정보가 없습니다." });
   }
-  res.send(info);
+  return res.send(info);
 });
 
 app.post("/loa-hands/userCollection", async (req, res) => {
