@@ -33,9 +33,8 @@ app.get("/loa-hands/event", async (req, res) => {
   if (data.includes("서비스 점검")) {
     res.status(403).send({ message: "서비스 점검중입니다." });
   }
-  res.status(504).send({ message: "timeout" });
 
-  // res.send(data);
+  res.send(data);
 });
 
 app.get("/loa-hands/calendar", (req, res) => {
