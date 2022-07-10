@@ -12,8 +12,18 @@ const agent = new https.Agent({
   rejectUnauthorized: false,
 });
 
-const baseUrl = "https://m-lostark.game.onstove.com/Profile/";
-
+const baseUrl = "https://lostark.game.onstove.com/Profile/";
+const eventApi = (page) => axios.get(
+  "https://m-lostark.game.onstove.com/News/Event/Now",
+  {
+    httpsAgent: agent,
+    params: {
+      page,
+    }
+  }
+);
+  
+  
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
@@ -24,17 +34,14 @@ app.all("/*", function (req, res, next) {
 });
 
 app.get("/loa-hands/event", async (req, res) => {
-  const { data } = await axios({
-    url: "https://m-lostark.game.onstove.com/News/Event/Now",
-    method: "GET",
-    httpsAgent: agent,
-  });
+  const arr = (await Promise.all(Array(10).fill(null).map((_, idx) => eventApi(idx + 1)))).filter(cont => !cont.data.includes('해당 게시물이 없습니다.'))
+  const datas = arr.map(({data}) => data)
 
-  if (data.includes("서비스 점검")) {
+  if (datas[0].includes("서비스 점검")) {
     res.status(403).send({ message: "서비스 점검중입니다." });
   }
 
-  res.send(data);
+  res.send(datas);
 });
 
 app.get("/loa-hands/calendar", (req, res) => {
