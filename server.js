@@ -12,7 +12,7 @@ const agent = new https.Agent({
   rejectUnauthorized: false,
 });
 
-const baseUrl = "https://lostark.game.onstove.com/Profile/";
+const baseUrl = "https://m-lostark.game.onstove.com/Profile/";
 const eventApi = (page) => axios.get(
   "https://m-lostark.game.onstove.com/News/Event/Now",
   {
